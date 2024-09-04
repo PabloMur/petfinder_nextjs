@@ -1,0 +1,3 @@
+const StartSearchPetsBtn = () => {};
+
+export { StartSearchPetsBtn };
