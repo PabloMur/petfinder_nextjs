@@ -1,3 +1,4 @@
+import { StartSearchPetsBtn } from "@/components/ui/buttons/StartSearchPetsBtn";
 import pet from "../../public/perro.jpg";
 import Image from "next/image";
 
@@ -17,6 +18,7 @@ export default function Home() {
           <button className="bg-black text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-900 transition">
             ¡Comienza Ahora!
           </button>
+          <StartSearchPetsBtn></StartSearchPetsBtn>
         </div>
         <div className="bg-purple-700 h-full w-1/2 flex justify-center items-center relative">
           <Image src={pet} alt="Dog image" layout="fill" objectFit="cover" />
