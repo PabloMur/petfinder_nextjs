@@ -1,35 +1,36 @@
-// controllers/petController.ts
-//ESTE CODIGO DEBE SER AJUSTADO AL PROYECTO FINAL Y REAL
-import { db } from "../firebaseAdmin"; // Importa tu instancia de Firebase Admin
-import { Pet } from "../models/Pet"; // Importa el modelo de Pet
+import { firestore } from "@/lib/FirebaseConn"; // Instancia de Firebase Admin
+import { PetData } from "@/types/PetData"; // Importar el tipo PetData
 
-// Obtener una mascota por su ID
-export const getPetById = async (id: string) => {
+// Crear una nueva mascota
+export const createPet = async (petData: PetData): Promise<string> => {
   try {
-    const petDoc = await db.collection("pets").doc(id).get();
-    if (!petDoc.exists) {
-      throw new Error("No se encontró la mascota con el ID especificado.");
-    }
-    return petDoc.data();
+    const newPet = await firestore.collection("pets").add({ ...petData });
+    return newPet.id; // Devolver el ID de la nueva mascota creada
   } catch (error) {
-    throw new Error(`Error al obtener la mascota: ${error.message}`);
+    throw new Error(`Error al crear la mascota: ${error}`);
   }
 };
 
-// Crear una nueva mascota
-export const createPet = async (petData: Pet) => {
+// Obtener una mascota por su ID
+export const getPetById = async (id: string): Promise<PetData | null> => {
   try {
-    const newPet = await db.collection("pets").add({ ...petData });
-    return newPet.id;
+    const petDoc = await firestore.collection("pets").doc(id).get();
+    if (!petDoc.exists) {
+      throw new Error("No se encontró la mascota con el ID especificado.");
+    }
+    return petDoc.data() as PetData; // Aseguramos que el resultado tiene el tipo PetData
   } catch (error) {
-    throw new Error(`Error al crear la mascota: ${error.message}`);
+    throw new Error(`Error al obtener la mascota: ${error}`);
   }
 };
 
 // Actualizar los datos de una mascota por su ID
-export const updatePetById = async (id: string, petData: Partial<Pet>) => {
+export const updatePetById = async (
+  id: string,
+  petData: Partial<PetData>
+): Promise<string> => {
   try {
-    const petRef = db.collection("pets").doc(id);
+    const petRef = firestore.collection("pets").doc(id);
     const petDoc = await petRef.get();
 
     if (!petDoc.exists) {
@@ -37,16 +38,16 @@ export const updatePetById = async (id: string, petData: Partial<Pet>) => {
     }
 
     await petRef.update(petData);
-    return { message: "Mascota actualizada correctamente" };
+    return `Mascota con ID ${id} actualizada correctamente.`;
   } catch (error) {
-    throw new Error(`Error al actualizar la mascota: ${error.message}`);
+    throw new Error(`Error al actualizar la mascota: ${error}`);
   }
 };
 
 // Eliminar una mascota por su ID
-export const deletePetById = async (id: string) => {
+export const deletePetById = async (id: string): Promise<string> => {
   try {
-    const petRef = db.collection("pets").doc(id);
+    const petRef = firestore.collection("pets").doc(id);
     const petDoc = await petRef.get();
 
     if (!petDoc.exists) {
@@ -54,8 +55,8 @@ export const deletePetById = async (id: string) => {
     }
 
     await petRef.delete();
-    return { message: "Mascota eliminada correctamente" };
+    return `Mascota con ID ${id} eliminada correctamente.`;
   } catch (error) {
-    throw new Error(`Error al eliminar la mascota: ${error.message}`);
+    throw new Error(`Error al eliminar la mascota: ${error}`);
   }
 };
