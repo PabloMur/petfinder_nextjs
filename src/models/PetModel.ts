@@ -8,7 +8,7 @@ class Pet {
   isLost: boolean;
   location: string;
   dateLostOrFound: Date;
-  ownerContact?: string;
+  ownerContact: string;
 
   constructor(
     id: string,
@@ -17,10 +17,10 @@ class Pet {
     isLost: boolean,
     location: string,
     dateLostOrFound: Date,
+    ownerContact: string,
     breed?: string,
     age?: number,
-    description?: string,
-    ownerContact?: string
+    description?: string
   ) {
     this.id = id;
     this.name = name;
