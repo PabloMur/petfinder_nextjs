@@ -1,6 +1,7 @@
 import { StartSearchPetsBtn } from "@/components/ui/buttons/StartSearchPetsBtn";
 import pet from "../../public/perro.jpg";
 import Image from "next/image";
+import SignIn from "@/components/SignIn";
 
 export default function Home() {
   return (
@@ -18,6 +19,10 @@ export default function Home() {
           <button className="bg-black text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-900 transition">
             ¡Comienza Ahora!
           </button>
+          <div>
+            <p>Test de Inicio de sesion</p>
+            <SignIn></SignIn>
+          </div>
           <StartSearchPetsBtn></StartSearchPetsBtn>
         </div>
         <div className="bg-purple-700 h-full w-1/2 flex justify-center items-center relative">
