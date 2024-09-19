@@ -9,6 +9,7 @@ export function validatePetData(petData: PetData) {
     "location",
     "dateLostOrFound",
     "ownerContact", // Añadido como campo requerido
+    "ownerEmail", // Añadido como campo requerido
   ];
 
   // Verificar que todos los campos requeridos están presentes
@@ -46,6 +47,10 @@ export function validatePetData(petData: PetData) {
   // Validar el campo 'ownerContact' como requerido y tipo string
   if (typeof petData.ownerContact !== "string") {
     throw new Error("El campo 'ownerContact' debe ser una cadena de texto.");
+  }
+
+  if (typeof petData.ownerEmail !== "string") {
+    throw new Error("El campo 'ownerEmail' debe ser una cadena de texto.");
   }
 
   // Validar campos opcionales

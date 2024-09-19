@@ -8,6 +8,7 @@ class Pet {
   isLost: boolean;
   location: string;
   dateLostOrFound: Date;
+  ownerEmail: string | undefined;
   ownerContact: string;
 
   constructor(
@@ -18,6 +19,7 @@ class Pet {
     location: string,
     dateLostOrFound: Date,
     ownerContact: string,
+    ownerEmail: string,
     breed?: string,
     age?: number,
     description?: string
@@ -32,6 +34,7 @@ class Pet {
     this.location = location;
     this.dateLostOrFound = dateLostOrFound;
     this.ownerContact = ownerContact;
+    this.ownerEmail = ownerEmail;
   }
 
   // Método para cambiar el estado de 'perdido/encontrado'

@@ -10,4 +10,5 @@ export type PetData = {
   location: string;
   dateLostOrFound: Date | string; // Puede ser un string o un objeto Date
   ownerContact?: string;
+  ownerEmail?: string;
 };

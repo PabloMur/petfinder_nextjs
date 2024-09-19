@@ -1,15 +1,19 @@
 import { getToken } from "next-auth/jwt";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-const secret = process.env.JWT_SECRET;
+const secret = process.env.JWT_SECRET as string;
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ request, secret });
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req, secret });
 
-  return NextResponse.redirect(new URL("/", request.url));
+  if (!token) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
+  return NextResponse.next();
 }
 
+// Definir las rutas protegidas
 export const config = {
-  matcher: "/api/pet",
+  matcher: ["/api/pet", "/api/user"], // Todas las rutas que empiecen con /api/protected serán protegidas
 };
