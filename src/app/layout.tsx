@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CustomLayout } from "@/components/CustomLayout";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CustomLayout>{children}</CustomLayout>
+        <SessionProvider>
+          <CustomLayout>{children}</CustomLayout>
+        </SessionProvider>
       </body>
     </html>
   );

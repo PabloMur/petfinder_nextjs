@@ -5,7 +5,14 @@ const StartSearchPetsBtn = () => {
   const handleClick = () => {
     goTo("/search");
   };
-  return <button onClick={handleClick}>Test</button>;
+  return (
+    <button
+      className="bg-black text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-900 transition"
+      onClick={handleClick}
+    >
+      Comienza Ahora!
+    </button>
+  );
 };
 
 export { StartSearchPetsBtn };
