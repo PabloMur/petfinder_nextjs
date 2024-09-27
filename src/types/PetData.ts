@@ -1,6 +1,5 @@
 // Definición del tipo PetData
 export type PetData = {
-  id: string;
   name: string;
   species: string;
   breed?: string;

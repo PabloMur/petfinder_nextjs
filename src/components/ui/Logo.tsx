@@ -6,7 +6,7 @@ const Logo = () => {
   const goTo = useGoto();
   return (
     <div
-      className="flex justify-center items-center gap-2 cursor-pointer px-2 hover:bg-purple-950 rounded-xl"
+      className="flex justify-center items-center gap-2 cursor-pointer p-2 px-3 hover:bg-purple-700 rounded-xl h-fit"
       onClick={() => {
         goTo("/");
       }}

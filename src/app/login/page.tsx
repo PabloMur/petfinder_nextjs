@@ -2,9 +2,9 @@ import { GoogleLoginBtn } from "@/components/ui/buttons/GoogleLoginBtn";
 
 const LoginPage = () => {
   return (
-    <div className="h-[90vh] flex flex-col justify-start items-center bg-purple-100 pt-20">
+    <div className="h-[90vh] flex flex-col justify-start items-center bg-gradient-to-br from-purple-200 via-purple-400 to-orange-400 pt-20">
       <h2 className="text-black font-bold text-3xl">
-        Te damos la bienvenida a PetFinder
+        Te damos la bienvenida a PetFinder!
       </h2>
       <div className="w-full flex flex-col justify-center items-center pt-10">
         <div>
@@ -18,7 +18,7 @@ const LoginPage = () => {
                 className="rounded-lg text-black p-2 text-sm min-w-[300px] text-center border border-black h-11"
               />
             </label>
-            <button className="bg-purple-900 w-full rounded-lg p-2 h-11 mt-2">
+            <button className="bg-purple-900 w-full rounded-lg p-2 h-11 mt-2 hover:bg-purple-700">
               Ingresar
             </button>
           </form>

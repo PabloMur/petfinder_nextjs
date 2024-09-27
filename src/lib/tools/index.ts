@@ -1,8 +1,8 @@
 import { PetData } from "@/types/PetData";
+import { ReportData } from "@/types/ReportData";
 
 export function validatePetData(petData: PetData) {
   const requiredFields = [
-    "id",
     "name",
     "species",
     "isLost",
@@ -20,9 +20,6 @@ export function validatePetData(petData: PetData) {
   }
 
   // Validaciones específicas de los tipos de datos
-  if (typeof petData.id !== "string") {
-    throw new Error("El campo 'id' debe ser una cadena de texto.");
-  }
 
   if (typeof petData.name !== "string") {
     throw new Error("El campo 'name' debe ser una cadena de texto.");
@@ -67,6 +64,60 @@ export function validatePetData(petData: PetData) {
   if (petData.description && typeof petData.description !== "string") {
     throw new Error(
       "El campo 'description' debe ser una cadena de texto si se proporciona."
+    );
+  }
+}
+
+export function validateReportData(reportData: ReportData) {
+  const requiredFields = [
+    "reporterName",
+    "petId",
+    "description",
+    "location",
+    "dateLostOrFound",
+    "reporterPhone",
+  ];
+
+  // Verificar que todos los campos requeridos están presentes
+  for (const field of requiredFields) {
+    if (!reportData[field as keyof ReportData]) {
+      throw new Error(`El campo ${field} es obligatorio.`);
+    }
+  }
+
+  // Validaciones específicas de los tipos de datos
+
+  if (typeof reportData.reporterName !== "string") {
+    throw new Error("El campo 'reporterName' debe ser una cadena de texto.");
+  }
+
+  if (typeof reportData.petId !== "string") {
+    throw new Error("El campo 'petId' debe ser una cadena de texto.");
+  }
+
+  if (typeof reportData.description !== "string") {
+    throw new Error("El campo 'description' debe ser una cadena de texto.");
+  }
+
+  if (typeof reportData.location !== "string") {
+    throw new Error("El campo 'location' debe ser una cadena de texto.");
+  }
+
+  if (isNaN(Date.parse(reportData.dateLostOrFound.toString()))) {
+    throw new Error("El campo 'dateLostOrFound' debe ser una fecha válida.");
+  }
+
+  if (typeof reportData.reporterPhone !== "string") {
+    throw new Error("El campo 'reporterPhone' debe ser una cadena de texto.");
+  }
+
+  // Validar el campo 'reporterEmail' como opcional, si se proporciona
+  if (
+    reportData.reporterEmail &&
+    typeof reportData.reporterEmail !== "string"
+  ) {
+    throw new Error(
+      "El campo 'reporterEmail' debe ser una cadena de texto si se proporciona."
     );
   }
 }

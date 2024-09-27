@@ -7,7 +7,32 @@ export const createPet = async (petData: PetData): Promise<string> => {
     const newPet = await firestore.collection("pets").add({ ...petData });
     return newPet.id; // Devolver el ID de la nueva mascota creada
   } catch (error) {
-    throw new Error(`Error al crear la mascota: ${error}`);
+    throw new Error(`Error al crear la mascota`);
+  }
+};
+
+// Obtener todas las mascotas por el email del propietario
+export const getPetsByOwnerEmail = async (
+  email: string
+): Promise<PetData[]> => {
+  try {
+    const petsSnapshot = await firestore
+      .collection("pets")
+      .where("ownerEmail", "==", email)
+      .get();
+
+    if (petsSnapshot.empty) {
+      throw new Error("No se encontraron mascotas para el email especificado.");
+    }
+
+    const pets: PetData[] = [];
+    petsSnapshot.forEach((doc) => {
+      pets.push(doc.data() as PetData);
+    });
+
+    return pets;
+  } catch (error) {
+    throw new Error(`Error al obtener las mascotas: ${error}`);
   }
 };
 

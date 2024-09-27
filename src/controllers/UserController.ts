@@ -1,6 +1,9 @@
 // controllers/userController.ts
-import { firestore } from "@/lib/FirebaseConn"; // Importa tu instancia de Firebase Admin
-import { User } from "@/models/UserModel"; // Importa el modelo de User
+
+import { firestore } from "@/lib/FirebaseConn"; // Conexión a Firebase
+import { User } from "@/models/UserModel"; // Modelo de User
+
+// Funciones de CRUD para el usuario
 
 // Obtener un usuario por su ID
 export const getUserById = async (id: string) => {
@@ -15,6 +18,16 @@ export const getUserById = async (id: string) => {
   }
 };
 
+// Verificar si un usuario existe por su ID
+export const doesUserExist = async (id: string): Promise<boolean> => {
+  try {
+    const userDoc = await firestore.collection("users").doc(id).get();
+    return userDoc.exists;
+  } catch (error) {
+    throw new Error(`Error al verificar si el usuario existe: ${error}`);
+  }
+};
+
 // Crear un nuevo usuario
 export const createUser = async (userData: User) => {
   try {
@@ -25,7 +38,7 @@ export const createUser = async (userData: User) => {
   }
 };
 
-// Actualizar los datos de un usuario por su ID
+// Actualizar un usuario por su ID
 export const updateUserById = async (id: string, userData: Partial<User>) => {
   try {
     const userRef = firestore.collection("users").doc(id);
@@ -50,6 +63,23 @@ export const deleteUserById = async (id: string) => {
 
     if (!userDoc.exists) {
       throw new Error("No se encontró el usuario con el ID especificado.");
+    }
+
+    await userRef.delete();
+    return { message: "Usuario eliminado correctamente" };
+  } catch (error) {
+    throw new Error(`Error al eliminar el usuario: ${error}`);
+  }
+};
+
+// Eliminar un usuario por su email
+export const deleteUserByEmail = async (email: string) => {
+  try {
+    const userRef = firestore.collection("users").doc(email);
+    const userDoc = await userRef.get();
+
+    if (!userDoc.exists) {
+      throw new Error("No se encontró el usuario con el email especificado.");
     }
 
     await userRef.delete();
