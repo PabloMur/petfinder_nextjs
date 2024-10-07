@@ -15,6 +15,14 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase }: any) {
+      addBase({
+        body: {
+          "@apply bg-gradient-to-r from-purple-400 via-pink-500 to-red-500": {},
+        },
+      });
+    },
+  ],
 };
 export default config;

@@ -1,13 +1,31 @@
 import { firestore } from "@/lib/FirebaseConn"; // Instancia de Firebase Admin
-import { PetData } from "@/types/PetData"; // Importar el tipo PetData
+import { PetData } from "@/types/PetData";
+import { Pet } from "@/models/PetModel"; // Importar la clase Pet
 
-// Crear una nueva mascota
+// Crear una nueva mascota usando la clase Pet
 export const createPet = async (petData: PetData): Promise<string> => {
   try {
-    const newPet = await firestore.collection("pets").add({ ...petData });
+    // Crear una nueva instancia de Pet con los datos que llegan desde el endpoint
+    const newPetInstance = new Pet(
+      petData.name,
+      petData.species,
+      petData.isLost,
+      petData.location,
+      new Date(),
+      petData.ownerContact || "", // Asegurar que ownerContact es un string (cadena vacía si no está definido)
+      petData.ownerEmail || "", // Asegurar que ownerEmail es un string (cadena vacía si no está definido)
+      petData.breed,
+      petData.age,
+      petData.description
+    );
+
+    // Guardar la nueva instancia en Firebase
+    const newPet = await firestore
+      .collection("pets")
+      .add({ ...newPetInstance });
     return newPet.id; // Devolver el ID de la nueva mascota creada
   } catch (error) {
-    throw new Error(`Error al crear la mascota`);
+    throw new Error(`Error al crear la mascota: ${error}`);
   }
 };
 

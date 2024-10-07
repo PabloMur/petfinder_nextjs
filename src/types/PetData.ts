@@ -1,9 +1,8 @@
-// Definición del tipo PetData
 export type PetData = {
   name: string;
   species: string;
-  breed?: string;
-  age?: number;
+  breed: string;
+  age: number;
   description?: string;
   isLost: boolean;
   location: string;

@@ -1,3 +1,4 @@
+import { UserType } from "@/types/UserData";
 import { PetData } from "@/types/PetData";
 import { ReportData } from "@/types/ReportData";
 
@@ -119,5 +120,56 @@ export function validateReportData(reportData: ReportData) {
     throw new Error(
       "El campo 'reporterEmail' debe ser una cadena de texto si se proporciona."
     );
+  }
+}
+
+export function validateUserData(userData: Omit<UserType, "password">) {
+  const requiredFields = ["name", "email", "image", "joinedAt"];
+
+  // Verificar que todos los campos requeridos están presentes
+  for (const field of requiredFields) {
+    if (!userData[field as keyof Omit<UserType, "password">]) {
+      throw new Error(`El campo ${field} es obligatorio.`);
+    }
+  }
+
+  // Validaciones específicas de los tipos de datos
+
+  if (typeof userData.name !== "string") {
+    throw new Error("El campo 'name' debe ser una cadena de texto.");
+  }
+
+  if (typeof userData.email !== "string") {
+    throw new Error("El campo 'email' debe ser una cadena de texto.");
+  }
+
+  if (typeof userData.image !== "string") {
+    throw new Error("El campo 'image' debe ser una cadena de texto.");
+  }
+
+  if (!(userData.joinedAt instanceof Date)) {
+    throw new Error("El campo 'joinedAt' debe ser una fecha válida.");
+  }
+
+  // Validar el campo 'phoneNumber' como opcional, si se proporciona
+  if (userData.phoneNumber && typeof userData.phoneNumber !== "string") {
+    throw new Error(
+      "El campo 'phoneNumber' debe ser una cadena de texto si se proporciona."
+    );
+  }
+
+  // Validar el campo 'address' como opcional, si se proporciona
+  if (userData.address && typeof userData.address !== "string") {
+    throw new Error(
+      "El campo 'address' debe ser una cadena de texto si se proporciona."
+    );
+  }
+
+  // Validar que 'pets' es un array de strings
+  if (
+    !Array.isArray(userData.pets) ||
+    !userData.pets.every((pet) => typeof pet === "string")
+  ) {
+    throw new Error("El campo 'pets' debe ser un array de cadenas de texto.");
   }
 }

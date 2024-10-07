@@ -6,13 +6,20 @@ import { User } from "@/models/UserModel"; // Modelo de User
 // Funciones de CRUD para el usuario
 
 // Obtener un usuario por su ID
-export const getUserById = async (id: string) => {
+export const getUserByEmail = async (email: string) => {
   try {
-    const userDoc = await firestore.collection("users").doc(id).get();
-    if (!userDoc.exists) {
-      throw new Error("No se encontró el usuario con el ID especificado.");
+    const userQuerySnapshot = await firestore
+      .collection("users")
+      .where("email", "==", email)
+      .get();
+
+    if (userQuerySnapshot.empty) {
+      throw new Error("No se encontró un usuario con el email especificado.");
     }
-    return userDoc.data();
+
+    const userDoc = userQuerySnapshot.docs[0]; // Tomamos el primer documento encontrado
+
+    return userDoc.data(); // Retorna los datos del usuario
   } catch (error) {
     throw new Error(`Error al obtener el usuario: ${error}`);
   }
@@ -29,9 +36,22 @@ export const doesUserExist = async (id: string): Promise<boolean> => {
 };
 
 // Crear un nuevo usuario
-export const createUser = async (userData: User) => {
+export const createUser = async (userData: any) => {
   try {
-    const newUser = await firestore.collection("users").add({ ...userData });
+    // Crear una instancia de User con los datos recibidos
+    const newUserInstance = new User(
+      userData.name,
+      userData.email,
+      userData.image,
+      userData.pets || [],
+      userData.phoneNumber,
+      userData.address
+    );
+
+    // Guardar la instancia en Firebase
+    const newUser = await firestore
+      .collection("users")
+      .add({ ...newUserInstance });
     return newUser.id;
   } catch (error) {
     throw new Error(`Error al crear el usuario: ${error}`);

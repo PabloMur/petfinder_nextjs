@@ -1,5 +1,4 @@
-class Pet {
-  id: string;
+export class Pet {
   name: string;
   species: string;
   breed?: string;
@@ -12,7 +11,6 @@ class Pet {
   ownerContact: string;
 
   constructor(
-    id: string,
     name: string,
     species: string,
     isLost: boolean,
@@ -24,7 +22,6 @@ class Pet {
     age?: number,
     description?: string
   ) {
-    this.id = id;
     this.name = name;
     this.species = species;
     this.breed = breed;
@@ -54,5 +51,3 @@ class Pet {
     } ${this.isLost ? "perdido" : "encontrado"} en ${this.location}.`;
   }
 }
-
-export { Pet };

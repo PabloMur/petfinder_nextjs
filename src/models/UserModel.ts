@@ -1,29 +1,26 @@
 class User {
-  id: string;
   name: string;
   email: string;
-  password: string;
+  image: string;
   phoneNumber?: string; // Número de teléfono (opcional)
   address?: string; // Dirección del usuario (opcional)
   pets: string[]; // Lista de mascotas asociadas al usuario (IDs de las mascotas)
   joinedAt: Date; // Fecha en la que se unió el usuario
 
   constructor(
-    id: string,
     name: string,
     email: string,
-    password: string,
+    image: string,
     pets: string[] = [],
     phoneNumber?: string,
     address?: string
   ) {
-    this.id = id;
     this.name = name;
     this.email = email;
-    this.password = password;
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.pets = pets;
+    this.image = image;
     this.joinedAt = new Date(); // Establece la fecha de creación al momento actual
   }
 
@@ -38,9 +35,6 @@ class User {
   }
 
   // Método para cambiar la contraseña
-  changePassword(newPassword: string): void {
-    this.password = newPassword;
-  }
 
   // Método para añadir una nueva mascota a la lista de mascotas del usuario
   addPet(petId: string): void {

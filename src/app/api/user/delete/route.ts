@@ -1,5 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
-import { deleteUserByEmail, doesUserExist } from "@/controllers/UserController";
+import {
+  deleteUserByEmail,
+  doesUserExist,
+  getUserById,
+} from "@/controllers/UserController";
 
 export async function DELETE(request: NextRequest) {
   try {
