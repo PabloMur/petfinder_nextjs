@@ -13,8 +13,8 @@
     "dropzone": "^6.0.0-beta.2",
     "firebase": "^10.13.1",
     "firebase-admin": "^12.5.0",
-    "next": "14.2.5",
-    "next-auth": "^5.0.0-beta.21",
+    "next": "^14.2.15",
+    "next-auth": "^4.24.8",
     "react": "^18",
     "react-dom": "^18",
     "recoil": "^0.7.7"

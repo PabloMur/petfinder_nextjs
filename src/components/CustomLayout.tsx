@@ -1,14 +1,21 @@
 "use client";
+import { SessionProvider } from "next-auth/react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { RecoilRoot } from "recoil";
 
-const CustomLayout = ({ children }: any) => {
+interface CustomLayoutProps {
+  children?: React.ReactNode;
+}
+
+const CustomLayout = ({ children }: CustomLayoutProps) => {
   return (
     <RecoilRoot>
-      <Header></Header>
-      {children}
-      <Footer></Footer>
+      <SessionProvider>
+        <Header />
+        {children}
+        <Footer />
+      </SessionProvider>
     </RecoilRoot>
   );
 };

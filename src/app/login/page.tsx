@@ -1,9 +1,12 @@
 "use client";
 import { GoogleLoginBtn } from "@/components/ui/buttons/GoogleLoginBtn";
-import { useCheckEmail } from "@/hooks";
+import { useCheckEmail, useProtectedRoute } from "@/hooks";
 
 const LoginPage = () => {
   const checkEmail = useCheckEmail();
+  const protectPage = useProtectedRoute("/login", "/search");
+
+  protectPage();
 
   const checkEmailFunction = async (email: string) => {
     try {

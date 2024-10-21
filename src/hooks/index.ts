@@ -1,7 +1,9 @@
 import { useRouter } from "next/navigation";
 import { APICheckEmail, APIGetUserData } from "@/lib/APICalls";
 import { userLocationLat, userLocationLng } from "@/lib/atoms";
-import { useRecoilState } from "recoil";
+import { useGotoRecoilSnapshot, useRecoilState } from "recoil";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 //Mar del Patas
 export const useGoto = () => {
@@ -51,5 +53,22 @@ export const useSetUserLocation = () => {
         console.error("Error al obtener la ubicación:", error);
       }
     );
+  };
+};
+
+export const useProtectedRoute = (
+  redirectUrl: string,
+  protectedRoute: string
+) => {
+  const { data: session, status } = useSession();
+  const goto = useGoto();
+  return () => {
+    useEffect(() => {
+      if (status === "unauthenticated") {
+        goto(redirectUrl);
+      } else if (status === "authenticated") {
+        goto(protectedRoute);
+      }
+    }, [status]);
   };
 };
